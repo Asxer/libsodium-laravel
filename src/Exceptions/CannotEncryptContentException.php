@@ -6,7 +6,7 @@
  * Time: 16:03
  */
 
-namespace Asxer\Exceptions;
+namespace Asxer\CryptoApi\Exceptions;
 
 use Exception;
 
