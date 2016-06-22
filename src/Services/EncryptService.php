@@ -10,8 +10,8 @@
 namespace Asxer\CryptoApi\Services;
 
 use Asxer\CryptoApi\Exceptions\PublicKeyNotFoundException;
-use Asxer\Exceptions\CannotEncryptContentException;
-use Asxer\Exceptions\PrivateKeyNotFoundException;
+use Asxer\CryptoApi\Exceptions\CannotEncryptContentException;
+use Asxer\CryptoApi\Exceptions\PrivateKeyNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Sodium;
 
