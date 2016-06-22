@@ -17,7 +17,7 @@
   "autoload": {
     "psr-4": {
       "Asxer\\CryptoApi\\": "src/",
-      "Asxer\\CryptoApi\\Tests": "tests/"
+      "Asxer\\CryptoApi\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "stable"
