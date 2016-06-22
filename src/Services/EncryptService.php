@@ -21,7 +21,7 @@ class EncryptService
 
     public function __construct()
     {
-        $this->privateKey = config('private_key', null);
+        $this->privateKey = config('encryption.private_key', null);
 
         if (empty($this->privateKey)) {
             throw new PrivateKeyNotFoundException();
@@ -73,5 +73,9 @@ class EncryptService
         if ($plaintext === false) {
             throw new CannotEncryptContentException();
         }
+    }
+
+    public function encryptContent($content) {
+        return $content;
     }
 }

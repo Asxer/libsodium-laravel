@@ -16,7 +16,7 @@ class LibsodiumServiceProvider extends ServiceProvider
     public function boot() {
         $this->publishes([
             __DIR__.'/../config/config.php' => config_path('encryption.php'),
-        ]);
+        ], 'config');
     }
 
     public function register()
