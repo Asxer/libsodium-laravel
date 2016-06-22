@@ -12,5 +12,5 @@ use Exception;
 
 class PublicKeyNotFoundException extends Exception
 {
-
+    protected $message = 'Public key not found';
 }

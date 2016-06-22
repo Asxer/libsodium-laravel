@@ -12,5 +12,5 @@ use Exception;
 
 class PrivateKeyNotFoundException extends Exception
 {
-
+    protected $message = 'Private key not provided';
 }

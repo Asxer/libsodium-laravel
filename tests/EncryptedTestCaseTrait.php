@@ -9,6 +9,8 @@
 
 namespace Asxer\CryptoApi\Tests;
 
+use Asxer\CryptoApi\Services\EncryptService;
+
 trait EncryptedTestCaseTrait
 {
     protected $isEncrypted = false;
@@ -17,5 +19,15 @@ trait EncryptedTestCaseTrait
         $this->isEncrypted = true;
 
         return $this;
+    }
+
+    public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
+    {
+        if ($this->isEncrypted) {
+            $server['PUBLIC_KEY'] = '123';
+            $content = app(EncryptService::class)->encryptContent();
+        }
+
+        parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
     }
 }

@@ -12,5 +12,5 @@ use Exception;
 
 class CannotEncryptContentException extends Exception
 {
-
+    protected $message = 'Can not encrypt content';
 }
