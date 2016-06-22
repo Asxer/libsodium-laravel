@@ -10,11 +10,23 @@
 namespace Asxer\CryptoApi\Services;
 
 use Asxer\CryptoApi\Exceptions\PublicKeyNotFoundException;
+use Asxer\Exceptions\CannotEncryptContentException;
+use Asxer\Exceptions\PrivateKeyNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
+use Sodium;
 
 class EncryptService
 {
-    private $sessionId;
+    private $privateKey;
+
+    public function __construct()
+    {
+        $this->privateKey = config('private_key', null);
+
+        if (empty($this->privateKey)) {
+            throw new PrivateKeyNotFoundException();
+        }
+    }
 
     /**
      * Decrypt incoming request.
@@ -51,63 +63,15 @@ class EncryptService
      * @return string
      */
     protected function getPublicKey($request) {
-        if ($request->hasHeader('Public-Key')) {
-            $this->savePublicKeyFromHeader($request);
+        return $request->header('Public-Key', null);
+    }
 
-            return $this->getPublicKeyFromSession($request);
+    protected function decryptContent($request, $publicKey) {
+        $content = $request->getContent();
+
+        $plaintext = crypto_secretbox_open($content, $publicKey, $this->privateKey);
+        if ($plaintext === false) {
+            throw new CannotEncryptContentException();
         }
-
-        if ($request->hasHeader('Session-Id')) {
-            return $this->getPublicKeyFromSession($request);
-        }
-
-        return null;
-    }
-
-    /**
-     * Save public key from header Public-Key to session with key public-key
-     *
-     * @param  \Illuminate\Http\Request  $request
-     */
-    protected function savePublicKeyFromHeader($request) {
-        $encryptedPublicKey = $request->header('Public-Key');
-
-        $publicKey = $this->decryptPublicKey($encryptedPublicKey);
-
-        $this->savePublicKey($publicKey);
-    }
-
-    /**
-     * Get public key from session
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return string
-     */
-    protected function getPublicKeyFromSession($request) {
-        $sessionId = $request->header('Session-Id');
-
-        session_id($sessionId);
-
-        return session('public-key');
-    }
-
-    /**
-     * Save public key to session with key public-key
-     *
-     * @param  string $publicKey
-     */
-    protected function savePublicKey($publicKey) {
-        $this->sessionId = session_id();
-        session('public-key', $publicKey);
-    }
-
-    /**
-     * Decrypt public key which encrypted by RSA-algorithm with private-key
-     *
-     * @param  string $encryptedPublicKey
-     * @return string
-     */
-    protected function decryptPublicKey($encryptedPublicKey) {
-
     }
 }

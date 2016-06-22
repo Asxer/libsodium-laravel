@@ -18,9 +18,9 @@ class CryptoApiMiddleware
 {
     private $encryptService;
 
-    public function __construct(EncryptService $encryptService)
+    public function __construct()
     {
-        $this->encryptService = $encryptService;
+        $this->encryptService = app(EncryptService::class);
     }
 
     /**
