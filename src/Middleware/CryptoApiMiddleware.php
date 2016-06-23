@@ -40,9 +40,15 @@ class CryptoApiMiddleware
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        $this->spoofRequest($request);
+
         /** @var Response $response */
         $response = $next($request);
 
         return $this->encryptService->encryptResponse($response);
+    }
+
+    protected function spoofRequest($request) {
+        app()->instance('request', $request);
     }
 }
