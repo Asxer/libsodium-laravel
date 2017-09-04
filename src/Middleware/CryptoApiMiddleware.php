@@ -14,9 +14,13 @@ use Asxer\CryptoApi\Services\EncryptService;
 use Closure;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @property EncryptService $encryptService
+*/
 class CryptoApiMiddleware
 {
-    private $encryptService;
+    /** @var EncryptService $encryptService */
+    protected $encryptService;
 
     public function __construct()
     {

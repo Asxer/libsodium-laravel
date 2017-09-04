@@ -94,7 +94,7 @@ class EncryptService
     }
 
     public function decryptContent($content, $publicKey) {
-        $plaintext = \Sodium\crypto_secretbox_open($content, $publicKey, $this->privateKey);
+        $plaintext = sodium_crypto_secretbox_open($content, $publicKey, $this->privateKey);
 
         if ($plaintext === false) {
             throw new CannotEncryptContentException();
@@ -118,11 +118,11 @@ class EncryptService
     }
 
     public function encryptContent($content, $publicKey) {
-        return \Sodium\crypto_secretbox($content, $publicKey, $this->privateKey);
+        return sodium_crypto_secretbox($content, $publicKey, $this->privateKey);
     }
 
     public function generatePublicKey() {
-        return \Sodium\randombytes_buf(\Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+        return random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
     }
 
     /**

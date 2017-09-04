@@ -1,6 +1,6 @@
 {
   "name": "asxer/libsodium-laravel",
-  "version" : "0.0.0",
+  "version" : "1.0.0",
   "description": "Provided middleware for implementing of encrypted api.",
   "keywords": ["laravel", "cryptography", "libsodium", "api"],
   "license": "MIT",
@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": ">=5.3.7",
+    "php": ">=7.1.0",
     "laravel/framework": ">=5.2.0"
   },
   "autoload": {
