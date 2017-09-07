@@ -31,7 +31,7 @@ trait EncryptedTestCaseTrait
 
             $content = $encryptService->encryptContent($content, $publicKey);
 
-            $server['HTTP_PUBLIC_KEY'] = $publicKey;
+            $server['HTTP_PUBLIC_KEY'] = bin2hex($publicKey);
         }
 
         parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);

@@ -78,7 +78,8 @@ class EncryptService
      */
     protected function makeJsonResponse($response, $encryptedContent, $publicKey) {
         $headers = $response->headers->all();
-        $headers['PUBLIC_KEY'] = $publicKey;
+
+        $headers['PUBLIC_KEY'] = bin2hex($publicKey);
 
         return response($encryptedContent, $response->getStatusCode(), $headers);
     }
@@ -94,7 +95,9 @@ class EncryptService
     }
 
     public function decryptContent($content, $publicKey) {
-        $plaintext = sodium_crypto_secretbox_open($content, $publicKey, $this->privateKey);
+        $rawPublicKey = hex2bin($publicKey);
+
+        $plaintext = sodium_crypto_secretbox_open($content, $rawPublicKey, $this->privateKey);
 
         if ($plaintext === false) {
             throw new CannotEncryptContentException();
