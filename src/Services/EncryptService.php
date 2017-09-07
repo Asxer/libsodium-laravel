@@ -95,6 +95,10 @@ class EncryptService
     }
 
     public function decryptContent($content, $publicKey) {
+        if (empty($content)) {
+            return $content;
+        }
+
         $rawPublicKey = hex2bin($publicKey);
 
         $plaintext = sodium_crypto_secretbox_open($content, $rawPublicKey, $this->privateKey);
