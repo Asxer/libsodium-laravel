@@ -100,8 +100,9 @@ class EncryptService
         }
 
         $rawPublicKey = hex2bin($publicKey);
+        $rawContent = hex2bin($content);
 
-        $plaintext = sodium_crypto_secretbox_open($content, $rawPublicKey, $this->privateKey);
+        $plaintext = sodium_crypto_secretbox_open($rawContent, $rawPublicKey, $this->privateKey);
 
         if ($plaintext === false) {
             throw new CannotEncryptContentException();
@@ -125,7 +126,9 @@ class EncryptService
     }
 
     public function encryptContent($content, $publicKey) {
-        return sodium_crypto_secretbox($content, $publicKey, $this->privateKey);
+        $rawContent = sodium_crypto_secretbox($content, $publicKey, $this->privateKey);
+
+        return bin2hex($rawContent);
     }
 
     public function generatePublicKey() {
