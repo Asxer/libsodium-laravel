@@ -132,7 +132,7 @@ class EncryptService
     }
 
     public function generatePublicKey() {
-        return random_bytes(SODIUM_CRYPTO_BOX_NONCEBYTES);
+        return random_bytes(24);
     }
 
     /**
